@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AIDungeon/Javascript-GPT-3-Encoder.git"
+    "url": "git+https://github.com/AIDungeon/GPT-3-Encoder.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/AIDungeon/Javascript-GPT-3-Encoder/issues"
+    "url": "https://github.com/AIDungeon/GPT-3-Encoder/issues"
   },
-  "homepage": "https://github.com/AIDungeon/Javascript-GPT-3-Encoder#readme"
+  "homepage": "https://github.com/AIDungeon/GPT-3-Encoder#readme"
 }
