@@ -1,6 +1,6 @@
 {
   "name": "gpt-3-encoder",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Javascript BPE Encoder Decoder for GPT-2 / GPT-3",
   "main": "encoder.js",
   "files": ["encoder.json", "vocab.bpe"],
