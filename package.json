@@ -1,0 +1,19 @@
+{
+  "name": "gpt-3-encoder",
+  "version": "1.0.0",
+  "description": "Javascript BPE Encoder Decoder for GPT-2 / GPT-3",
+  "main": "encoder.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AIDungeon/Javascript-GPT-3-Encoder.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AIDungeon/Javascript-GPT-3-Encoder/issues"
+  },
+  "homepage": "https://github.com/AIDungeon/Javascript-GPT-3-Encoder#readme"
+}

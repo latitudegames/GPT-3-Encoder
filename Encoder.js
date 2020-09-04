@@ -1,5 +1,5 @@
 // This file includes code which was modified from https://github.com/openai/gpt-2
-import fs from 'fs'
+const fs = require('fs')
 
 const range = (x, y) => {
   const res = Array.from(Array(y).keys()).slice(x)
@@ -61,11 +61,11 @@ function get_pairs(word) {
 
 const pat = /'s|'t|'re|'ve|'m|'l l|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu
 
-const encoder = JSON.parse(fs.readFileSync('helpers/encoding/encoder.json'))
+const encoder = JSON.parse(fs.readFileSync('encoding/encoder.json'))
 const decoder = {}
 Object.keys(encoder).map(x => { decoder[encoder[x]] = x })
 
-const bpe_file = fs.readFileSync('helpers/encoding/vocab.bpe', 'utf-8')
+const bpe_file = fs.readFileSync('encoding/vocab.bpe', 'utf-8')
 const lines = bpe_file.split('\n')
 
 // bpe_merges = [tuple(merge_str.split()) for merge_str in bpe_data.split("\n")[1:-1]]
@@ -144,7 +144,7 @@ function bpe(token) {
   return word
 }
 
-export function encode(text) {
+function encode(text) {
   let bpe_tokens = []
   const matches = Array.from(text.matchAll(pat)).map(x => x[0])
   for (let token of matches) {
@@ -155,13 +155,13 @@ export function encode(text) {
   return bpe_tokens
 }
 
-export function decode(tokens) {
+function decode(tokens) {
   let text = tokens.map(x => decoder[x]).join('')
   text = decodeStr(text.split('').map(x => byte_decoder[x]))
   return text
 }
 
-export default {
+module.exports = {
   encode,
-  decode,
+  decode
 }
