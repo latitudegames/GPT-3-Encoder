@@ -7,8 +7,8 @@ console.log('Encoded this string looks like: ', encoded)
 
 console.log('We can look at each token and what it represents')
 for(let token of encoded){
-  console.log('Token: ', token, ' String: ', encode([token]))
+  console.log({token, string: decode([token])})
 }
 
 const decoded = decode(encoded)
-console.log('We can decode it back into ', decoded)
+console.log('We can decode it back into:\n', decoded)
