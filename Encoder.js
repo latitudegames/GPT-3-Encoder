@@ -1,5 +1,9 @@
 // This file includes code which was modified from https://github.com/openai/gpt-2
 const fs = require('fs')
+const path = require('path');
+
+const encoder = JSON.parse(fs.readFileSync(path.join(__dirname, './encoder.json')));
+const bpe_file = fs.readFileSync(path.join(__dirname, './vocab.bpe'), 'utf-8');
 
 const range = (x, y) => {
   const res = Array.from(Array(y).keys()).slice(x)
@@ -61,11 +65,9 @@ function get_pairs(word) {
 
 const pat = /'s|'t|'re|'ve|'m|'l l|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu
 
-const encoder = JSON.parse(fs.readFileSync('./encoder.json'))
 const decoder = {}
 Object.keys(encoder).map(x => { decoder[encoder[x]] = x })
 
-const bpe_file = fs.readFileSync('./vocab.bpe', 'utf-8')
 const lines = bpe_file.split('\n')
 
 // bpe_merges = [tuple(merge_str.split()) for merge_str in bpe_data.split("\n")[1:-1]]
