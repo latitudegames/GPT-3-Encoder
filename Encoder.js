@@ -20,12 +20,12 @@ const chr = x => {
 
 const textEncoder = new TextEncoder("utf-8")
 const encodeStr = str => {
-  //return str.split('').map(x => ord(x))
   return Array.from(textEncoder.encode(str)).map(x => x.toString())
 }
 
+const textDecoder = new TextDecoder("utf-8")
 const decodeStr = arr => {
-  return arr.map(x => String.fromCharCode(x)).join('')
+  return textDecoder.decode(new Uint8Array(arr));
 }
 
 const dictZip = (x, y) => {
@@ -172,5 +172,7 @@ function decode(tokens) {
   return text
 }
 
-// const encoded = encode('hello 👋 world 🌍 This is a long string to test whether or not the emoji issue was fixed!')
-// console.log({encoded})
+module.exports = {
+  encode,
+  decode
+};

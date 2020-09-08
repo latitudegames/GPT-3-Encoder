@@ -8,7 +8,7 @@
     "vocab.bpe"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/AIDungeon/GPT-3-Encoder/issues"
   },
-  "homepage": "https://github.com/AIDungeon/GPT-3-Encoder#readme"
+  "homepage": "https://github.com/AIDungeon/GPT-3-Encoder#readme",
+  "devDependencies": {
+    "jest": "^26.4.2"
+  }
 }
