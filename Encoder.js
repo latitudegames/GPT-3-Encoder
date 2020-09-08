@@ -18,8 +18,10 @@ const chr = x => {
   return String.fromCharCode(x)
 }
 
+const textEncoder = new TextEncoder("utf-8")
 const encodeStr = str => {
-  return str.split('').map(x => ord(x))
+  //return str.split('').map(x => ord(x))
+  return Array.from(textEncoder.encode(str)).map(x => x.toString())
 }
 
 const decodeStr = arr => {
@@ -88,6 +90,7 @@ function bpe(token) {
   }
 
   let word = token.split('')
+
   let pairs = get_pairs(word)
 
   if (!pairs) {
@@ -100,6 +103,9 @@ function bpe(token) {
       const rank = bpe_ranks[pair]
       minPairs[(isNaN(rank) ? 10e10 : rank)] = pair
     })
+
+
+
     const bigram = minPairs[Math.min(...Object.keys(minPairs).map(x => {
       return parseInt(x)
     }
@@ -150,7 +156,10 @@ function encode(text) {
   let bpe_tokens = []
   const matches = Array.from(text.matchAll(pat)).map(x => x[0])
   for (let token of matches) {
-    token = encodeStr(token).map(x => byte_encoder[x]).join('')
+    token = encodeStr(token).map(x => {
+      return byte_encoder[x]
+    }).join('')
+    
     const new_tokens = bpe(token).split(' ').map(x => encoder[x])
     bpe_tokens = bpe_tokens.concat(new_tokens)
   }
@@ -163,7 +172,5 @@ function decode(tokens) {
   return text
 }
 
-module.exports = {
-  encode,
-  decode
-}
+// const encoded = encode('hello 👋 world 🌍 This is a long string to test whether or not the emoji issue was fixed!')
+// console.log({encoded})
