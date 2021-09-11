@@ -65,7 +65,7 @@ function get_pairs(word) {
   return pairs
 }
 
-const pat = /'s|'t|'re|'ve|'m|'l l|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu
+const pat = /'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu
 
 const decoder = {}
 Object.keys(encoder).map(x => { decoder[encoder[x]] = x })
@@ -87,7 +87,7 @@ const cache = {}
 function bpe(token) {
   if (token in cache) {
     return cache[token]
-  }
+  }``
 
   let word = token.split('')
 
