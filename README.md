@@ -1,4 +1,4 @@
-GPT-3-Encoder
+# GPT-3-Encoder
 Javascript BPE Encoder Decoder for GPT-2 / GPT-3
 
 ## About
@@ -6,13 +6,15 @@ GPT-2 and GPT-3 use byte pair encoding to turn text into a series of integers to
 
 ## Install with npm
 
-`npm install gpt-3-encoder`
+```
+npm install gpt-3-encoder
+```
 
 ## Usage
 
 Compatible with Node >= 12
 
-```
+```js
 const {encode, decode} = require('gpt-3-encoder')
 
 const str = 'This is an example sentence to try encoding out on!'
