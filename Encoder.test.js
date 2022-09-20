@@ -35,3 +35,10 @@ test('emojis', () => {
   expect(encode(str)).toEqual([31373, 50169, 233, 995, 12520, 234, 235])
   expect(decode(encode(str))).toEqual(str)
 });
+
+test('properties of Object',()=>{
+	const str = "toString constructor hasOwnProperty valueOf";
+
+	expect(encode(str)).toEqual([1462, 10100, 23772, 468, 23858, 21746, 1988, 5189]);
+	expect(decode(encode(str))).toEqual(str);
+})
