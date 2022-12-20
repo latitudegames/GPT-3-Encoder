@@ -84,6 +84,23 @@ Object.keys(byte_encoder).map(x => { byte_decoder[byte_encoder[x]] = x })
 const bpe_ranks = dictZip(bpe_merges, range(0, bpe_merges.length))
 const cache = {}
 
+/**
+ * This function appears to implement the Byte Pair Encoding (BPE) algorithm for subword tokenization.
+ *
+ * The BPE algorithm operates on a vocabulary of subwords, and works by iteratively replacing the most frequent pair of
+ * subwords in the vocabulary with a new subword, until a specified vocabulary size is reached. This results in a
+ * vocabulary of subwords that can be used to represent words in a language, while still maintaining some of the
+ * structure and meaning of the original words.
+ *
+ * Here's a breakdown of the function:
+ *  1 The function first checks if the input token is in the cache, and if it is, it returns the cached value. This is likely to improve performance by avoiding unnecessary processing for tokens that have already been processed.
+ *  2 The input token is then split into individual characters, and a list of pairs of adjacent characters (bigrams) is generated using the get_pairs function. If there are no pairs, the input token is returned as is.
+ *  3 The function then enters a loop that continues until a termination condition is met. In each iteration, the pair of subwords with the lowest rank (as determined by the bpe_ranks object) is identified and stored in the bigram variable. If the bigram is not in bpe_ranks, the loop terminates.
+ *  4 The bigram is then replaced with a new subword in the word list. The word list is iterated over and any instances of the bigram are replaced with the new subword.
+ *  5 The word list is then joined back into a string and stored in the cache. The cached string is returned as the result of the function.
+ * @param token
+ * @return {string|*}
+ */
 function bpe(token) {
   if (token in cache) {
     return cache[token]
