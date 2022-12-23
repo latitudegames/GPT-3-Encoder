@@ -82,11 +82,11 @@ const byte_decoder = {}
 Object.keys(byte_encoder).map(x => { byte_decoder[byte_encoder[x]] = x })
 
 const bpe_ranks = dictZip(bpe_merges, range(0, bpe_merges.length))
-const cache = {}
+const cache = new Map;
 
 function bpe(token) {
-  if (token in cache) {
-    return cache[token]
+  if (cache.has(token)) {
+    return cache.get(token)
   }``
 
   let word = token.split('')
@@ -147,7 +147,7 @@ function bpe(token) {
   }
 
   word = word.join(' ')
-  cache[token] = word
+  cache.set(token, word)
 
   return word
 }
