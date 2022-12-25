@@ -85,12 +85,12 @@ const bpe_ranks = dictZip(bpe_merges, range(0, bpe_merges.length))
 const cache = new Map;
 
 /**
- * This function appears to implement the Byte Pair Encoding (BPE) algorithm for subword tokenization.
+ * Implements the Byte Pair Encoding (BPE) algorithm for subword tokenization.
  *
  * The BPE algorithm operates on a vocabulary of subwords, and works by iteratively replacing the most frequent pair of
  * subwords in the vocabulary with a new subword, until a specified vocabulary size is reached. This results in a
- * vocabulary of subwords that can be used to represent words in a language, while still maintaining some of the
- * structure and meaning of the original words.
+ * of subwords that can be used to represent words in a language, while still maintaining some of the structure and
+ * meaning of the original words.
  *
  * Here's a breakdown of the function:
  *  1 The function first checks if the input token is in the cache, and if it is, it returns the cached value. This is likely to improve performance by avoiding unnecessary processing for tokens that have already been processed.
@@ -98,8 +98,8 @@ const cache = new Map;
  *  3 The function then enters a loop that continues until a termination condition is met. In each iteration, the pair of subwords with the lowest rank (as determined by the bpe_ranks object) is identified and stored in the bigram variable. If the bigram is not in bpe_ranks, the loop terminates.
  *  4 The bigram is then replaced with a new subword in the word list. The word list is iterated over and any instances of the bigram are replaced with the new subword.
  *  5 The word list is then joined back into a string and stored in the cache. The cached string is returned as the result of the function.
- * @param token
- * @return {string|*}
+ * @param {string} token - The input token to be tokenized.
+ * @return {string} word - The tokenized subwords as a string.
  */
 function bpe(token) {
   if (cache.has(token)) {
@@ -169,7 +169,21 @@ function bpe(token) {
   return word
 }
 
+/**
+ * Encodes a given text string into a list of BPE tokens.
+ *
+ * @param {string} text - The text to be encoded.
+ * @return {Array} bpe_tokens - The encoded BPE tokens.
+ */
 function encode(text) {
+  if(typeof text != "string") {
+    if(typeof text == "undefined") {
+      console.warn("undefined text returning empty []");
+      return [];
+    }
+    console.warn("casting to string hope thats what you want!");
+    text = ""+text;
+  }
   let bpe_tokens = []
   const matches = Array.from(text.matchAll(pat)).map(x => x[0])
   for (let token of matches) {
@@ -183,10 +197,57 @@ function encode(text) {
   return bpe_tokens
 }
 
-// This function works by iterating through the matches of the pat pattern in the input text,
-// encoding each match using the encodeStr function and the byte_encoder mapping,
-// and then applying the bpe function to the encoded token. The number of tokens produced by the bpe function is then added to the count variable.
-// Finally, the count variable is returned as the result.
+/**
+ * Computes count, unique, and frequency statistics for a string or an array of tokens.
+ *
+ * @param {(string|Array<number>)} input - The input string or array of tokens.
+ * @return {Object} stats - An object with count, unique, and frequency properties.
+ *
+ * @property {number} stats.count - The total number of tokens.
+ * @property {number} stats.unique - The number of unique tokens.
+ * @property {Object} stats.frequency - An object with token-frequency pairs, sorted by frequency in descending order.
+ */
+function tokenStats(input) {
+  let tokens
+  if (typeof input === 'string') {
+    // Encode the string into tokens
+    tokens = encode(input)
+  } else {
+    tokens = input
+  }
+
+  const stats = {
+    count: tokens.length,
+    unique: new Set(tokens).size,
+    frequency: {}
+  }
+
+  // Compute the frequency of each token
+  for (let token of tokens) {
+    if (stats.frequency[token]) {
+      stats.frequency[token]++
+    } else {
+      stats.frequency[token] = 1
+    }
+  }
+
+  // Sort the frequency object by frequency in descending order
+  stats.frequency = Object.fromEntries(
+      Object.entries(stats.frequency).sort((a, b) => b[1] - a[1])
+  )
+
+  return stats
+}
+
+
+/**
+ *  This function works by iterating through the matches of the pat pattern in the input text,
+ *  encoding each match using the encodeStr function and the byte_encoder mapping,
+ *  and then applying the bpe function to the encoded token. The number of tokens produced by the bpe function is then added to the count variable.
+ *  Finally, the count variable is returned as the result.
+ * @param text
+ * @return {number}
+ */
 function countTokens(text) {
   let count = 0
   const matches = Array.from(text.matchAll(pat)).map(x => x[0])
@@ -200,7 +261,17 @@ function countTokens(text) {
   return count
 }
 
+/**
+ * Decodes a list of BPE tokens into a text string.
+ *
+ * @param {Array} tokens - The list of BPE tokens to be decoded.
+ * @return {string} text - The decoded text string.
+ */
 function decode(tokens) {
+  if(!tokens) {
+    console.warn("No tokens to decode, returning empty string")
+    return "";
+  }
   let text = tokens.map(x => decoder[x]).join('')
   text = decodeStr(text.split('').map(x => byte_decoder[x]))
   return text
@@ -209,5 +280,6 @@ function decode(tokens) {
 module.exports = {
   encode,
   decode,
-  countTokens
+  countTokens,
+  tokenStats
 };

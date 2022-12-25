@@ -1,6 +1,6 @@
 {
-  "name": "@nick.heiner/gpt-3-encoder",
-  "version": "1.2.0",
+  "name": "@syonfox/gpt-3-encoder",
+  "version": "1.2.1",
   "description": "Javascript BPE Encoder Decoder for GPT-2 / GPT-3",
   "main": "index.js",
   "types": "./index.d.ts",
@@ -11,19 +11,21 @@
     "index.d.ts"
   ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "docs": "jsdoc Encoder.js -r README.md -d docs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NickHeiner/GPT-3-Encoder.git"
+    "url": "git+https://github.com/syonfox/GPT-3-Encoder.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/NickHeiner/GPT-3-Encoder/issues"
+    "url": "https://github.com/syonfox/GPT-3-Encoder/issues"
   },
-  "homepage": "https://github.com/NickHeiner/GPT-3-Encoder#readme",
+  "homepage": "https://github.com/syonfox/GPT-3-Encoder#readme",
   "devDependencies": {
-    "jest": "^26.4.2"
+    "jest": "^26.4.2",
+    "jsdoc": "^4.0.0"
   }
 }
