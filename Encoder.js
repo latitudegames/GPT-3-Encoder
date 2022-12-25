@@ -176,11 +176,28 @@ function encode(text) {
     token = encodeStr(token).map(x => {
       return byte_encoder[x]
     }).join('')
-    
+
     const new_tokens = bpe(token).split(' ').map(x => encoder[x])
     bpe_tokens = bpe_tokens.concat(new_tokens)
   }
   return bpe_tokens
+}
+
+// This function works by iterating through the matches of the pat pattern in the input text,
+// encoding each match using the encodeStr function and the byte_encoder mapping,
+// and then applying the bpe function to the encoded token. The number of tokens produced by the bpe function is then added to the count variable.
+// Finally, the count variable is returned as the result.
+function countTokens(text) {
+  let count = 0
+  const matches = Array.from(text.matchAll(pat)).map(x => x[0])
+  for (let token of matches) {
+    token = encodeStr(token).map(x => {
+      return byte_encoder[x]
+    }).join('')
+
+    count += bpe(token).split(' ').length
+  }
+  return count
 }
 
 function decode(tokens) {
@@ -191,5 +208,6 @@ function decode(tokens) {
 
 module.exports = {
   encode,
-  decode
+  decode,
+  countTokens
 };
