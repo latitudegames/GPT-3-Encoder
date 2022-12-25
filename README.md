@@ -1,3 +1,7 @@
+# This is a fork of https://github.com/latitudegames/GPT-3-Encoder. I made this fork so I could apply some PRs that had been sent to the upstream repo.
+
+~~~
+
 # GPT-3-Encoder
 Javascript BPE Encoder Decoder for GPT-2 / GPT-3
 
