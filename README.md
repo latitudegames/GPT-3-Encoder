@@ -2,6 +2,7 @@
 
     changelog: 
         add countTokens function
+        add tokenStats function
         updated docs (npm run docs)
 
 
@@ -19,6 +20,9 @@ npm install @syonfox/gpt-3-encoder
 
 
 ## Usage
+<a href="https://github.com/syonfox/GPT-3-Encoder#readme">View on GitHub</a>
+
+<a href="https://syonfox.github.io/GPT-3-Encoder/">View Docs Pages</a>
 
 Compatible with Node >= 12
 
