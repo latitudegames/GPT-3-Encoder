@@ -107,3 +107,14 @@ test('stats test', () => {
     // const str = "toString constructor hasOwnProperty valueOf";
     // expect(encode(str).length).toEqual(countTokens(str));
 })
+test('test " issue #9', () => {
+    const str = '“wrote jack a letter”'
+
+    let e = encode(str);
+    let stats = tokenStats(e);
+    // console.log("example stats: ", stats);
+    expect(e).toEqual([447, 250, 42910, 14509, 257, 3850, 447, 251])
+    expect(decode(e)).toEqual(str)
+    // const str = "toString constructor hasOwnProperty valueOf";
+    // expect(encode(str).length).toEqual(countTokens(str));
+})
