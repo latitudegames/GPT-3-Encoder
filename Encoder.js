@@ -18,14 +18,12 @@ const chr = x => {
   return String.fromCharCode(x)
 }
 
-const textEncoder = new TextEncoder("utf-8")
 const encodeStr = str => {
-  return Array.from(textEncoder.encode(str)).map(x => x.toString())
+  return Array.from( Buffer.from(str, 'utf-8')).map(x => x.toString());
 }
 
-const textDecoder = new TextDecoder("utf-8")
 const decodeStr = arr => {
-  return textDecoder.decode(new Uint8Array(arr));
+  return Buffer.from(arr).toString('utf-8')
 }
 
 const dictZip = (x, y) => {
