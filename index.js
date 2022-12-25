@@ -1,6 +1,7 @@
-const { encode, decode } = require("./Encoder");
+const { encode, decode, countTokens } = require("./Encoder");
 
 module.exports = {
   encode,
   decode,
+  countTokens,
 };
