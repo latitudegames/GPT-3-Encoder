@@ -50,7 +50,6 @@ test('properties of Object', () => {
     expect(decode(encode(str))).toEqual(str);
 })
 
-
 test('Random encode=decode count', () => {
     let n = 200
     let str
@@ -73,48 +72,35 @@ test('Random encode=decode count', () => {
         t.d += Date.now()-now; now = Date.now();
         expect(d).toEqual(str);
         expect(e.length).toEqual(count);
-
     }
-
     console.log(`Timings for chars(${t.l}): fencode: ${t.f}, counting: ${t.c}, encoding: ${t.e}, decoding:${t.d}`)
-
-
-    // const str = "toString constructor hasOwnProperty valueOf";
-    // expect(encode(str).length).toEqual(countTokens(str));
 })
 
 test('empty encode', () => {
     expect(encode()).toEqual([]);
-
 })
+
 test('null encode', () => {
     expect(encode(null)).toEqual(encode("null"));
-
 })
+
 test('empty decode', () => {
     expect(decode()).toEqual("");
-
 })
 
 test('stats test', () => {
     const str = "hello 👋 world 🌍, im a foo your a foo, everwer where a foo foo";
-
     let e = encode(str);
     let stats = tokenStats(e);
     console.log("example stats: ", stats);
     expect(tokenStats(e)).toEqual(tokenStats(str))
     expect(decode(encode(str))).toEqual(str)
-    // const str = "toString constructor hasOwnProperty valueOf";
-    // expect(encode(str).length).toEqual(countTokens(str));
 })
+
 test('test " issue #9', () => {
     const str = '“wrote jack a letter”'
-
     let e = encode(str);
     let stats = tokenStats(e);
-    // console.log("example stats: ", stats);
     expect(e).toEqual([447, 250, 42910, 14509, 257, 3850, 447, 251])
     expect(decode(e)).toEqual(str)
-    // const str = "toString constructor hasOwnProperty valueOf";
-    // expect(encode(str).length).toEqual(countTokens(str));
 })
