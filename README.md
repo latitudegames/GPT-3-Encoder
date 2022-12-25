@@ -20,6 +20,10 @@ npm install @syonfox/gpt-3-encoder
 
 
 ## Usage
+<a href="https://www.npmjs.com/package/@syonfox/gpt-3-encoder">
+  <img src="https://img.shields.io/npm/v/@syonfox/gpt-3-encoder.svg" alt="npm version">
+</a>
+
 <a href="https://github.com/syonfox/GPT-3-Encoder#readme">View on GitHub</a>
 
 <a href="https://syonfox.github.io/GPT-3-Encoder/">View Docs Pages</a>
@@ -68,7 +72,10 @@ less Encoder.js
 
 firefox ./docs/index.html
 
-npm publish
+npm publish --access public
+
+
+
 ```
 
 ## todo 
