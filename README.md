@@ -1,34 +1,66 @@
-#### This is a fork of https://github.com/latitudegames/GPT-3-Encoder. I made this fork so I could apply some PRs that had been sent to the upstream repo.
-
-    changelog: 
-        add countTokens function
-        add tokenStats function
-        updated docs (npm run docs)
-
-
 # GPT-3-Encoder
-Javascript BPE Encoder Decoder for GPT-2 / GPT-3
 
-## About
-GPT-2 and GPT-3 use byte pair encoding to turn text into a series of integers to feed into the model. This is a javascript implementation of OpenAI's original python encoder/decoder which can be found [here](https://github.com/openai/gpt-2)
+Javascript library for encoding and decoding text using Byte Pair Encoding (BPE), as used in GPT-2 and GPT-3 models by
+OpenAI. This is a fork of the original python implementation by OpenAI, which can be found here.
 
-## Install with npm
+This fork includes additional features such as the countTokens and tokenStats functions, as well as updated
+documentation.
+
+## Installation
+
+To install with npm:
 
 ```
 npm install @syonfox/gpt-3-encoder
 ```
 
-
 ## Usage
+
 <a href="https://www.npmjs.com/package/@syonfox/gpt-3-encoder">
   <img src="https://img.shields.io/npm/v/@syonfox/gpt-3-encoder.svg" alt="npm version">
 </a>
 
-<a href="https://github.com/syonfox/GPT-3-Encoder#readme">View on GitHub</a>
 
-<a href="https://syonfox.github.io/GPT-3-Encoder/">View Docs Pages</a>
+
+[![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://syonfox.github.io/GPT-3-Encoder/)
+
+![GitHub last commit](https://img.shields.io/github/last-commit/syonfox/GPT-3-Encoder)
+![GitHub branch checks state](https://img.shields.io/github/checks-status/syonfox/GPT-3-Encoder/master)
+
 
 Compatible with Node >= 12
+
+To use the library in your project, import it as follows:
+
+```js
+const GPT3Encoder = require('@syonfox/gpt-3-encoder');
+```
+
+### Additional Features
+
+In addition to the original `encoding` and `decoding` functions, this fork includes the following additional features:
+`countTokens(text: string): number`
+
+This function returns the number of tokens in the provided text, after encoding it using BPE.
+`tokenStats(text: string): object`
+
+This function returns an object containing statistics about the tokens in the provided text, after encoding it using
+BPE. The returned object includes the following properties:
+
+- `total`: the total number of tokens in the text.
+- `unique`: the number of unique tokens in the text.
+- `frequencies`: an object containing the frequency of each token in the text.
+
+Compatibility
+
+This library is compatible with both Node.js and browser environments, and has been converted to ECMAScript 6 syntax for
+use in the browser. A compiled version for both environments is included in the package.
+Credits
+
+This library was created as a fork of the original GPT-3-Encoder library by latitudegames, with additional features and
+updates contributed by hugbubby.
+
+## Example
 
 ```js
 
@@ -41,12 +73,12 @@ const encoded = encode(str)
 console.log('Encoded this string looks like: ', encoded)
 
 console.log('We can look at each token and what it represents')
-for(let token of encoded){
-  console.log({token, string: decode([token])})
+for (let token of encoded) {
+    console.log({token, string: decode([token])})
 }
 
 //example count tokens usage
-if(countTokens(str) > 5) {
+if (countTokens(str) > 5) {
     console.log("String is over five tokens, inconcevable");
 }
 
@@ -55,8 +87,7 @@ console.log('We can decode it back into:\n', decoded)
 
 ```
 
-
-## Developers 
+## Developers
 
 ```sh
 git clone https://github.com/syonfox/GPT-3-Encoder.git
@@ -78,24 +109,25 @@ npm publish --access public
 
 ```
 
-## todo 
+## todo
 
 More stats that work well with this token representation.
 
-Clean up and keep it simple. 
+Clean up and keep it simple.
 
-more tests.
+Here are some additional suggestions for improving the GPT-3 Encoder:
 
-performance analysis 
-
-There are several performance improvements that could be made to the encode function:
-(from gpt todo vet these recommendations)
-
-    Cache the results of the encodeStr function to avoid unnecessary computation. You can do this by using a map or an object to store the results of encodeStr for each input string.
-    Use a regular expression to match the tokens in the input text instead of using the matchAll function. Regular expressions can be faster and more efficient than matchAll for certain types of patterns.
-    Use a different data structure to store the byte_encoder and encoder maps. Objects and maps can have different performance characteristics depending on the size and complexity of the data. You may want to experiment with different data structures to see which one works best for your use case.
-    Use a different data structure to store the bpe_tokens array. Arrays can be slower than other data structures for certain operations, such as appending new elements or concatenating multiple arrays. You may want to consider using a different data structure, such as a linked list or a queue, to store the bpe_tokens array.
-    Use a different algorithm to compute the BPE codes for the tokens. The current implementation of the bpe function may be inefficient for large datasets or for datasets with complex patterns. You may want to consider using a different algorithm, such as a divide-and-conquer or a hashing-based approach, to compute the BPE codes more efficiently.
-
-
+- Add more unit tests to ensure the correctness and reliability of the code. This can be particularly important for the
+  encode and decode functions, which are the main functions of the encoder.
+- Add more documentation and examples to help users understand how to use the encoder and integrate it into their own
+  projects. This could include additional JSDoc comments, as well as additional documentation in the README file and/or
+  GitHub Pages.
+- Consider adding support for other languages and character sets. Currently, the encoder only supports ASCII characters,
+  but there may be a demand for support for other languages and character sets.
+- Explore potential optimizations and performance improvements for the encode and decode functions. Some ideas might
+  include using faster data structures (such as a hash map or a trie), implementing more efficient algorithms, or using
+  multi-threading or web workers to take advantage of multiple cores or processors.
+- Consider adding support for other models or use cases. For example, you could add support for other OpenAI models (
+  such as GPT-2 or GPT-3) or for other applications of BPE encoding (such as machine translation or natural language
+  processing).
 
