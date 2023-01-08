@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <title>gpt-3-encoder Demo</title>
+  </head>
+  <body>
+    <h1>gpt-3-encoder Demo</h1>
+    <p>Enter some text in the text field below to see how it is encoded and decoded by the gpt-3-encoder library:</p>
+    <textarea id="input"></textarea>
+    <button id="encode-button">Encode</button>
+    <button id="decode-button">Decode</button>
+    <button id="count-button">Count Tokens</button>
+    <button id="stats-button">Get Token Stats</button>
+    <p>Encoded: <span id="encoded"></span></p>
+    <p>Decoded: <span id="decoded"></span></p>
+    <p>Token Count: <span id="count"></span></p>
+    <p>Token Stats: <span id="stats"></span></p>
+
+    <script type="application/javascript" src="../browser.js"></script>
+
+    <script>
+        const tokens = gpt3encoder.encode('Hello, world!');
+        const text = gpt3encoder.decode(tokens);
+        const tokenCount = gpt3encoder.countTokens('Hello, world!');
+        const tokenStats = gpt3encoder.tokenStats('Hello, world!');
+      const input = document.getElementById('input');
+      const encoded = document.getElementById('encoded');
+      const decodeButton = document.getElementById('decode-button');
+const countButton = document.getElementById('count-button');
+      const count = document.getElementById('count');
+      const statsButton = document.getElementById('stats-button');
+      const stats = document.getElementById('stats');
+
+      document.getElementById('encode-button').addEventListener('click', () => {
+        const text = input.value;
+        const tokens = gpt3encoder.encode(text);
+        encoded.innerHTML = JSON.stringify(tokens);
+      });
+
+      decodeButton.addEventListener('click', () => {
+        const tokens = JSON.parse(encoded.innerHTML);
+        const text = gpt3encoder.decode(tokens);
+        decoded.innerHTML = text;
+      });
+
+      countButton.addEventListener('click', () => {
+        const text = input.value;
+        const tokenCount = gpt3encoder.countTokens(text);
+        count.innerHTML = tokenCount;
+      });
+
+      statsButton.addEventListener('click', () => {
+        const input = document.getElementById('input').value;
+        const tokenStats = gpt3encoder.tokenStats(input);
+        stats.innerText = JSON.stringify(tokenStats, null , 4);
+      });
+    </script>
+  </body>
+</html>
