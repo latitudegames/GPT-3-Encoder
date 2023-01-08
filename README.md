@@ -24,6 +24,8 @@ npm install @syonfox/gpt-3-encoder
 
 [![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://syonfox.github.io/GPT-3-Encoder/)
 
+Also check out the browser demo [browser demo](https://syonfox.github.io/GPT-3-Encoder/browser.html)
+
 ![GitHub last commit](https://img.shields.io/github/last-commit/syonfox/GPT-3-Encoder)
 
 
