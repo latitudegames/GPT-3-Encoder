@@ -52,7 +52,8 @@ BPE. The returned object includes the following properties:
 - `total`: the total number of tokens in the text.
 - `unique`: the number of unique tokens in the text.
 - `frequencies`: an object containing the frequency of each token in the text.
-
+- `postions`: an object mapping tokens to positions in the encoded string
+- `tokens`: same as the output to tokens
 Compatibility
 
 This library is compatible with both Node.js and browser environments, we have used webpack to build /dist/bundle.js 1.5 MB including the data. A compiled version for both environments is included in the package.
@@ -61,6 +62,9 @@ Credits
 This library was created as a fork of the original GPT-3-Encoder library by latitudegames.
 
 ## Example
+
+See browser.html and demo.js
+Note you may need to include it from the appropriate place in node modules / npm package name
 
 ```js
 
@@ -90,27 +94,28 @@ console.log('We can decode it back into:\n', decoded)
 ## Developers
 
 I have added som other examples to the examples folder.
-Please take a look at pakege.json for how to do stuff
+Please take a look at package.json for how to do stuff
 
 ```sh
 git clone https://github.com/syonfox/GPT-3-Encoder.git
 
 cd GPT-3-Encoder
 
-npm install
+npm install # install dev deps (docs tests build)
 
-npm run test
-npm run docs
+npm run test # run tests
+npm run docs # build docs
 
-npm run browser
-npm run demo
+npm run build # builds it for the browser
+npm run browser # launches demo inf firefox
+npm run demo # runs node.js demo
 
 
-less Encoder.js
+less Encoder.js # the main code is here
 
-firefox ./docs/index.html
+firefox ./docs/index.html # view docs locally
 
-npm publish --access public
+npm publish --access public # dev publish to npm
 
 
 

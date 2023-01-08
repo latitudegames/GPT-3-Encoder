@@ -1,7 +1,7 @@
 // import {encode, decode, countTokens, tokenStats} from "gpt-3-encoder"
 //or
 
-const {encode, decode, countTokens, tokenStats} = require('./index')
+const {encode, decode, countTokens, tokenStats} = require('../index')
 
 const str = 'This is an example sentence to try encoding out on!'
 const encoded = encode(str)
