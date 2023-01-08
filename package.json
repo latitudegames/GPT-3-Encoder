@@ -19,7 +19,6 @@
   ],
   "scripts": {
     "docs": "jsdoc Encoder.js -r README.md -d docs && cp browser.* docs",
-    "dev": "webpack-dev-server",
     "build_bpe_ranks": "node build_bpe_ranks.js",
     "build": "browserify index.js -s gpt3encoder -o browser.js",
     "test": "jest",
