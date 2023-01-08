@@ -1,6 +1,6 @@
 {
   "name": "@syonfox/gpt-3-encoder",
-  "version": "1.3.3",
+  "version": "1.4.0rc",
   "description": "Javascript BPE Encoder Decoder for GPT-2 / GPT-3. The \"gpt-3-encoder\" module provides functions for encoding and decoding text using the Byte Pair Encoding (BPE) algorithm. It can be used to process text data for input into machine learning models, or to convert tokenized text back into human-readable format. It also includes functions for counting tokens in a given text and generating statistics about the tokens in a string or array.",
 
   "main": "index.js",
