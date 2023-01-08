@@ -86,6 +86,9 @@ console.log('We can decode it back into:\n', decoded)
 
 ## Developers
 
+I have added som other examples to the examples folder.
+Please take a look at pakege.json for how to do stuff
+
 ```sh
 git clone https://github.com/syonfox/GPT-3-Encoder.git
 
@@ -95,6 +98,10 @@ npm install
 
 npm run test
 npm run docs
+
+npm run browser
+npm run demo
+
 
 less Encoder.js
 

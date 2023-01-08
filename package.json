@@ -5,13 +5,14 @@
   "main": "index.js",
   "types": "./index.d.ts",
   "files": [
-    "dist/bundle.js",
+    "browser.js",
     "Encoder.js",
     "encoder.json",
     "encoder.js",
     "bpe_ranks.js",
     "index.js",
-    "index.d.ts"
+    "index.d.ts",
+    "example/*"
   ],
   "scripts": {
     "docs": "jsdoc Encoder.js -r README.md -d docs",
