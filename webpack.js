@@ -7,7 +7,22 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
+  // Other configuration options
+  // module: {
+  //   rules: [
+  //     {
+  //       test: /\.json$/,
+  //       use: ['json-loader'],
+  //     },
+  //   ],
+  // },
 
+  // devServer: {
+  //   index: "demo.html",
+  //   contentBase: path.resolve(__dirname),
+  //   port: 3000,
+  //   hot: true,
+  // },
 };
 
 //

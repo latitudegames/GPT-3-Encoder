@@ -2,7 +2,6 @@
   "name": "@syonfox/gpt-3-encoder",
   "version": "1.4.0rc",
   "description": "Javascript BPE Encoder Decoder for GPT-2 / GPT-3. The \"gpt-3-encoder\" module provides functions for encoding and decoding text using the Byte Pair Encoding (BPE) algorithm. It can be used to process text data for input into machine learning models, or to convert tokenized text back into human-readable format. It also includes functions for counting tokens in a given text and generating statistics about the tokens in a string or array.",
-
   "main": "index.js",
   "types": "./index.d.ts",
   "files": [
@@ -16,10 +15,13 @@
   ],
   "scripts": {
     "docs": "jsdoc Encoder.js -r README.md -d docs",
-    "demo": "node demo.js",
+    "dev": "webpack-dev-server",
     "build_bpe_ranks": "node build_bpe_ranks.js",
-    "build": "webpack  --config webpack.js   --mode production",
-    "test": "jest"
+    "build": "browserify index.js -s gpt3encoder -o browser.js",
+    "test": "jest",
+    "browser": "firefox example/browser.html",
+    "demo": "node example/demo.js"
+
   },
   "repository": {
     "type": "git",
@@ -32,10 +34,9 @@
   },
   "homepage": "https://github.com/syonfox/GPT-3-Encoder#readme",
   "devDependencies": {
+    "browserify": "^17.0.0",
     "jest": "^26.4.2",
-    "jsdoc": "^4.0.0",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "jsdoc": "^4.0.0"
   },
   "keywords": [
     "JavaScript",

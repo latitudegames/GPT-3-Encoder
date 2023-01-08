@@ -97,6 +97,30 @@ test('stats test', () => {
     expect(decode(encode(str))).toEqual(str)
 })
 
+test('bench  count', () => {
+    let n = 2
+    let str
+
+    let t = {
+        c:0,e:0,d:0,l: 0,f:0
+    }
+    for (let i = 0; i < n; i++) {
+        const randomNumber = 100000;
+        str = generateRandomString(randomNumber);
+        t.l+= randomNumber;
+        let now = Date.now();
+        let count = countTokens(str);
+
+        let time = Date.now()-now;
+        t.c += time;
+        console.log("counted ", count, "in ", time);
+
+    }
+    console.log(`Timings for ${n}* chars(${str.length}):  counting took average: ${t.c / n}, `)
+    expect(true)
+})
+
+
 test('test " issue #9', () => {
     const str = '“wrote jack a letter”'
     let e = encode(str);

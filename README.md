@@ -25,7 +25,6 @@ npm install @syonfox/gpt-3-encoder
 [![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://syonfox.github.io/GPT-3-Encoder/)
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/syonfox/GPT-3-Encoder)
-![GitHub branch checks state](https://img.shields.io/github/checks-status/syonfox/GPT-3-Encoder/master)
 
 
 Compatible with Node >= 12

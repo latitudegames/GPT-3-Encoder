@@ -1,16 +1,15 @@
 // This file includes code which was modified from https://github.com/openai/gpt-2
-
-
-
-// let now = Date.now()
-// fs = require('fs')
+// const fs = require('fs')
 // const path = require('path');
+// const json-loder
+// const loader = require("json-loader");
+
+// const encoder = loader('./encoder.json');
+
 // const encoder = JSON.parse(fs.readFileSync(path.join(__dirname, './encoder.json')));
 const encoder = require("./encoder");
-// console.log("Loaded encoder  in ", Date.now() - now, "ms")
-// now = Date.now()
+
 const bpe_ranks = require("./bpe_ranks");
-// console.log("Loaded bpe_ranks  in ", Date.now() - now, "ms")
 // const bpe_file = fs.readFileSync(path.join(__dirname, './vocab.bpe'), 'utf-8');
 
 const range = (x, y) => {
@@ -33,12 +32,6 @@ const encodeStr = str => {
 const decodeStr = arr => {
     return Buffer.from(arr).toString('utf-8')
 }
-
-// const dictZip = (x, y) => {
-//   const result = {}
-//   x.map((_, i) => { result[x[i]] = y[i] })
-//   return result
-// }
 
 function bytes_to_unicode() {
     const bs = range(ord('!'), ord('~') + 1).concat(range(ord('¡'), ord('¬') + 1), range(ord('®'), ord('ÿ') + 1))
@@ -74,28 +67,36 @@ function get_pairs(word) {
 }
 
 const pat = /'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu
+// The regular expression patis used to split a string into an array of tokens.
+//
+// The regular expression consists of several parts:
+//     's|'t|'re|'ve|'m|'ll|'d: These are all short forms of common English words (e.g. "is", "not", "have"). The | symbol means "or", so this part of the expression matches any of these short forms.
+//
+//     ?\p{L}+: This matches one or more consecutive letters (i.e. "words"). The ? means that the preceding space character is optional, so this part of the expression will match both words with spaces before and after them, as well as words without spaces.
+//
+//     ?\p{N}+: This matches one or more consecutive numbers. Like the previous part of the expression, the ? means that the preceding space character is optional.
+//
+//     ?[^\s\p{L}\p{N}]+: This matches one or more consecutive non-letter, non-number characters (e.g. punctuation, symbols). The [^...] notation means "any character except the ones listed inside the brackets", and \s represents whitespace characters. The \p{L} and \p{N} shorthand character classes represent letters and numbers, respectively. The + symbol means "one or more occurrences", and the ? means that the preceding space character is optional.
+//
+//     \s+(?!\S): This matches one or more consecutive whitespace characters that are followed by a non-whitespace character. The \S shorthand character class represents non-whitespace characters, and the (?!...) notation is a negative lookahead assertion, which means "do not match if the pattern inside the parentheses is present". This part of the expression is used to match leading and trailing whitespace characters.
+//
+//     \s+: This matches one or more consecutive whitespace characters. This part of the expression is used to match sequences of multiple whitespace characters within the string.
+//
+// The g flag at the end of the regular expression means "global", which means that the regular expression will continue to search for matches after the first one is found. The u flag means "Unicode", which enables the use of Unicode character classes like \p{L} and \p{N}.
+//
+// Overall, this regular expression is used to split a string into an array of tokens by matching words, numbers, and non-letter, non-number characters, as well as leading and trailing whitespace and sequences of multiple whitespace characters within the string.
 
 const decoder = {}
 Object.keys(encoder).map(x => {
     decoder[encoder[x]] = x
 })
 
-// const lines = bpe_file.split('\n')
-
-// bpe_merges = [tuple(merge_str.split()) for merge_str in bpe_data.split("\n")[1:-1]]
-// const bpe_merges = lines.slice(1, lines.length - 1).map(x => {
-//   return x.split(/(\s+)/).filter(function(e) { return e.trim().length > 0 })
-// })
 
 const byte_encoder = bytes_to_unicode()
 const byte_decoder = {}
 Object.keys(byte_encoder).map(x => {
     byte_decoder[byte_encoder[x]] = x
 })
-
-
-// It is safe to precompute bpe_ranks as it is not expected to change at runtime. bpe_ranks is created by mapping the bpe_merges array to an array of sequential integers, and this mapping does not depend on any runtime variables. bpe_ranks is a constant object and can be safely used without incurring any performance overhead.
-// const bpe_ranks = dictZip(bpe_merges, range(0, bpe_merges.length))
 
 
 const cache = new Map;
@@ -121,7 +122,6 @@ function bpe(token) {
     if (cache.has(token)) {
         return cache.get(token)
     }
-    ``
 
     let word = token.split('')
 
@@ -215,13 +215,17 @@ function encode(text) {
 
 /**
  * Computes count, unique, and frequency statistics for a string or an array of tokens.
+ * This function can be used to get insights into the characteristics of a text dataset,
+ * or to analyze the distribution of tokens in a body of text.
  *
  * @param {(string|Array<number>)} input - The input string or array of tokens.
- * @return {Object} stats - An object with count, unique, and frequency properties.
+ * @return {Object} stats - An object with count, unique, frequency, positions, and tokens properties.
  *
  * @property {number} stats.count - The total number of tokens.
  * @property {number} stats.unique - The number of unique tokens.
  * @property {Object} stats.frequency - An object with token-frequency pairs, sorted by frequency in descending order.
+ * @property {Object} stats.positions - An object with token-position pairs, where positions is an array of the indices of the token in the input string or array.
+ * @property {Array<number>} stats.tokens - The array of tokens passed to the function.
  */
 function tokenStats(input) {
     let tokens
@@ -235,17 +239,23 @@ function tokenStats(input) {
     const stats = {
         count: tokens.length,
         unique: new Set(tokens).size,
-        frequency: {}
+        frequency: {},
+        positions: {},
+        tokens,
     }
 
     // Compute the frequency of each token
-    for (let token of tokens) {
+    for (let i = 0; i < tokens.length; i++) {
+        const token = tokens[i];
         if (stats.frequency[token]) {
-            stats.frequency[token]++
+            stats.frequency[token]++;
+            stats.positions[token].push(i);
         } else {
-            stats.frequency[token] = 1
+            stats.frequency[token] = 1;
+            stats.positions[token] = [i];
         }
     }
+
 
     // Sort the frequency object by frequency in descending order
     stats.frequency = Object.fromEntries(
@@ -267,8 +277,25 @@ function tokenStats(input) {
 function countTokens(text) {
     let count = 0
     const matches = Array.from(text.matchAll(pat)).map(x => x[0])
-    for (let token of matches) {
-        token = encodeStr(token).map(x => {
+
+    // Timings for 20* chars(200000):  counting took average: 572.8,
+    //     count = matches.reduce((acc, token) => {
+    //         token = encodeStr(token).map(x => {
+    //             return byte_encoder[x]
+    //         }).join('');
+    //
+    //         return acc + bpe(token).split(' ').length;
+    //     }, 0);
+
+    //Timings for 20* chars(200000):  counting took average: 570.8,
+    // for (let token of matches) {
+
+    // Timings for 20* chars(200000):  counting took average: 559.85,
+    // not much difrence. but i dont mind the for loopl
+    let i, token;
+    for (i = 0; i < matches.length; i++) {
+        token = matches[i];
+        token = encodeStr(matches[i]).map(x => {
             return byte_encoder[x]
         }).join('')
 
