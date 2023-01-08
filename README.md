@@ -26,8 +26,9 @@ npm install @syonfox/gpt-3-encoder
 
 Also check out the browser demo [browser demo](https://syonfox.github.io/GPT-3-Encoder/browser.html)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/syonfox/GPT-3-Encoder)
-
+[![GitHub last commit](https://img.shields.io/github/last-commit/syonfox/GPT-3-Encoder)](https://github.com/syonfox/GPT-3-Encoder/commits)
+[![example workflow](https://github.com/syonfox/GPT-3-Encoder/actions/workflows/node.js.yml/badge.svg)](https://github.com/syonfox/GPT-3-Encoder/actions)
+[![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/syonfox/GPT-3-Encoder/)
 
 Compatible with Node >= 12
 
