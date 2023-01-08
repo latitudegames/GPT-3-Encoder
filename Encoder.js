@@ -1,85 +1,103 @@
 // This file includes code which was modified from https://github.com/openai/gpt-2
-const fs = require('fs')
-const path = require('path');
 
-const encoder = JSON.parse(fs.readFileSync(path.join(__dirname, './encoder.json')));
-const bpe_file = fs.readFileSync(path.join(__dirname, './vocab.bpe'), 'utf-8');
+
+
+// let now = Date.now()
+// fs = require('fs')
+// const path = require('path');
+// const encoder = JSON.parse(fs.readFileSync(path.join(__dirname, './encoder.json')));
+const encoder = require("./encoder");
+// console.log("Loaded encoder  in ", Date.now() - now, "ms")
+// now = Date.now()
+const bpe_ranks = require("./bpe_ranks");
+// console.log("Loaded bpe_ranks  in ", Date.now() - now, "ms")
+// const bpe_file = fs.readFileSync(path.join(__dirname, './vocab.bpe'), 'utf-8');
 
 const range = (x, y) => {
-  const res = Array.from(Array(y).keys()).slice(x)
-  return res
+    const res = Array.from(Array(y).keys()).slice(x)
+    return res
 }
 
 const ord = x => {
-  return x.charCodeAt(0)
+    return x.charCodeAt(0)
 }
 
 const chr = x => {
-  return String.fromCharCode(x)
+    return String.fromCharCode(x)
 }
 
 const encodeStr = str => {
-  return Array.from( Buffer.from(str, 'utf-8')).map(x => x.toString());
+    return Array.from(Buffer.from(str, 'utf-8')).map(x => x.toString());
 }
 
 const decodeStr = arr => {
-  return Buffer.from(arr).toString('utf-8')
+    return Buffer.from(arr).toString('utf-8')
 }
 
-const dictZip = (x, y) => {
-  const result = {}
-  x.map((_, i) => { result[x[i]] = y[i] })
-  return result
-}
+// const dictZip = (x, y) => {
+//   const result = {}
+//   x.map((_, i) => { result[x[i]] = y[i] })
+//   return result
+// }
 
 function bytes_to_unicode() {
-  const bs = range(ord('!'), ord('~') + 1).concat(range(ord('¡'), ord('¬') + 1), range(ord('®'), ord('ÿ') + 1))
+    const bs = range(ord('!'), ord('~') + 1).concat(range(ord('¡'), ord('¬') + 1), range(ord('®'), ord('ÿ') + 1))
 
-  let cs = bs.slice()
-  let n = 0
-  for (let b = 0; b < 2 ** 8; b++) {
-    if (!bs.includes(b)) {
-      bs.push(b)
-      cs.push(2 ** 8 + n)
-      n = n + 1
+    let cs = bs.slice()
+    let n = 0
+    for (let b = 0; b < 2 ** 8; b++) {
+        if (!bs.includes(b)) {
+            bs.push(b)
+            cs.push(2 ** 8 + n)
+            n = n + 1
+        }
     }
-  }
 
-  cs = cs.map(x => chr(x))
+    cs = cs.map(x => chr(x))
 
-  const result = {}
-  bs.map((_, i) => { result[bs[i]] = cs[i] })
-  return result
+    const result = {}
+    bs.map((_, i) => {
+        result[bs[i]] = cs[i]
+    })
+    return result
 }
 
 function get_pairs(word) {
-  const pairs = new Set()
-  let prev_char = word[0]
-  for (let i = 1; i < word.length; i++) {
-    const char = word[i]
-    pairs.add([prev_char, char])
-    prev_char = char
-  }
-  return pairs
+    const pairs = new Set()
+    let prev_char = word[0]
+    for (let i = 1; i < word.length; i++) {
+        const char = word[i]
+        pairs.add([prev_char, char])
+        prev_char = char
+    }
+    return pairs
 }
 
 const pat = /'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu
 
 const decoder = {}
-Object.keys(encoder).map(x => { decoder[encoder[x]] = x })
+Object.keys(encoder).map(x => {
+    decoder[encoder[x]] = x
+})
 
-const lines = bpe_file.split('\n')
+// const lines = bpe_file.split('\n')
 
 // bpe_merges = [tuple(merge_str.split()) for merge_str in bpe_data.split("\n")[1:-1]]
-const bpe_merges = lines.slice(1, lines.length - 1).map(x => {
-  return x.split(/(\s+)/).filter(function(e) { return e.trim().length > 0 })
-})
+// const bpe_merges = lines.slice(1, lines.length - 1).map(x => {
+//   return x.split(/(\s+)/).filter(function(e) { return e.trim().length > 0 })
+// })
 
 const byte_encoder = bytes_to_unicode()
 const byte_decoder = {}
-Object.keys(byte_encoder).map(x => { byte_decoder[byte_encoder[x]] = x })
+Object.keys(byte_encoder).map(x => {
+    byte_decoder[byte_encoder[x]] = x
+})
 
-const bpe_ranks = dictZip(bpe_merges, range(0, bpe_merges.length))
+
+// It is safe to precompute bpe_ranks as it is not expected to change at runtime. bpe_ranks is created by mapping the bpe_merges array to an array of sequential integers, and this mapping does not depend on any runtime variables. bpe_ranks is a constant object and can be safely used without incurring any performance overhead.
+// const bpe_ranks = dictZip(bpe_merges, range(0, bpe_merges.length))
+
+
 const cache = new Map;
 
 /**
@@ -100,71 +118,71 @@ const cache = new Map;
  * @return {string} word - The tokenized subwords as a string.
  */
 function bpe(token) {
-  if (cache.has(token)) {
-    return cache.get(token)
-  }``
-
-  let word = token.split('')
-
-  let pairs = get_pairs(word)
-
-  if (!pairs) {
-    return token
-  }
-
-  while (true) {
-    const minPairs = {}
-    Array.from(pairs).map(pair => {
-      const rank = bpe_ranks[pair]
-      minPairs[(isNaN(rank) ? 10e10 : rank)] = pair
-    })
-
-
-
-    const bigram = minPairs[Math.min(...Object.keys(minPairs).map(x => {
-      return parseInt(x)
+    if (cache.has(token)) {
+        return cache.get(token)
     }
-    ))]
+    ``
 
-    if (!(bigram in bpe_ranks)) {
-      break
+    let word = token.split('')
+
+    let pairs = get_pairs(word)
+
+    if (!pairs) {
+        return token
     }
 
-    const first = bigram[0]
-    const second = bigram[1]
-    let new_word = []
-    let i = 0
+    while (true) {
+        const minPairs = {}
+        Array.from(pairs).map(pair => {
+            const rank = bpe_ranks[pair]
+            minPairs[(isNaN(rank) ? 10e10 : rank)] = pair
+        })
 
-    while (i < word.length) {
-      const j = word.indexOf(first, i)
-      if (j === -1) {
-        new_word = new_word.concat(word.slice(i))
-        break
-      }
-      new_word = new_word.concat(word.slice(i, j))
-      i = j
 
-      if (word[i] === first && i < word.length - 1 && word[i + 1] === second) {
-        new_word.push(first + second)
-        i = i + 2
-      } else {
-        new_word.push(word[i])
-        i = i + 1
-      }
+        const bigram = minPairs[Math.min(...Object.keys(minPairs).map(x => {
+                return parseInt(x)
+            }
+        ))]
+
+        if (!(bigram in bpe_ranks)) {
+            break
+        }
+
+        const first = bigram[0]
+        const second = bigram[1]
+        let new_word = []
+        let i = 0
+
+        while (i < word.length) {
+            const j = word.indexOf(first, i)
+            if (j === -1) {
+                new_word = new_word.concat(word.slice(i))
+                break
+            }
+            new_word = new_word.concat(word.slice(i, j))
+            i = j
+
+            if (word[i] === first && i < word.length - 1 && word[i + 1] === second) {
+                new_word.push(first + second)
+                i = i + 2
+            } else {
+                new_word.push(word[i])
+                i = i + 1
+            }
+        }
+
+        word = new_word
+        if (word.length === 1) {
+            break
+        } else {
+            pairs = get_pairs(word)
+        }
     }
 
-    word = new_word
-    if (word.length === 1) {
-      break
-    } else {
-      pairs = get_pairs(word)
-    }
-  }
+    word = word.join(' ')
+    cache.set(token, word)
 
-  word = word.join(' ')
-  cache.set(token, word)
-
-  return word
+    return word
 }
 
 /**
@@ -174,25 +192,25 @@ function bpe(token) {
  * @return {Array} bpe_tokens - The encoded BPE tokens.
  */
 function encode(text) {
-  if(typeof text != "string") {
-    if(typeof text == "undefined") {
-      console.warn("undefined text returning empty []");
-      return [];
+    if (typeof text != "string") {
+        if (typeof text == "undefined") {
+            console.warn("undefined text returning empty []");
+            return [];
+        }
+        console.warn("casting to string hope thats what you want!");
+        text = "" + text;
     }
-    console.warn("casting to string hope thats what you want!");
-    text = ""+text;
-  }
-  let bpe_tokens = []
-  const matches = Array.from(text.matchAll(pat)).map(x => x[0])
-  for (let token of matches) {
-    token = encodeStr(token).map(x => {
-      return byte_encoder[x]
-    }).join('')
+    let bpe_tokens = []
+    const matches = Array.from(text.matchAll(pat)).map(x => x[0])
+    for (let token of matches) {
+        token = encodeStr(token).map(x => {
+            return byte_encoder[x]
+        }).join('')
 
-    const new_tokens = bpe(token).split(' ').map(x => encoder[x])
-    bpe_tokens = bpe_tokens.concat(new_tokens)
-  }
-  return bpe_tokens
+        const new_tokens = bpe(token).split(' ').map(x => encoder[x])
+        bpe_tokens = bpe_tokens.concat(new_tokens)
+    }
+    return bpe_tokens
 }
 
 /**
@@ -206,35 +224,35 @@ function encode(text) {
  * @property {Object} stats.frequency - An object with token-frequency pairs, sorted by frequency in descending order.
  */
 function tokenStats(input) {
-  let tokens
-  if (typeof input === 'string') {
-    // Encode the string into tokens
-    tokens = encode(input)
-  } else {
-    tokens = input
-  }
-
-  const stats = {
-    count: tokens.length,
-    unique: new Set(tokens).size,
-    frequency: {}
-  }
-
-  // Compute the frequency of each token
-  for (let token of tokens) {
-    if (stats.frequency[token]) {
-      stats.frequency[token]++
+    let tokens
+    if (typeof input === 'string') {
+        // Encode the string into tokens
+        tokens = encode(input)
     } else {
-      stats.frequency[token] = 1
+        tokens = input
     }
-  }
 
-  // Sort the frequency object by frequency in descending order
-  stats.frequency = Object.fromEntries(
-      Object.entries(stats.frequency).sort((a, b) => b[1] - a[1])
-  )
+    const stats = {
+        count: tokens.length,
+        unique: new Set(tokens).size,
+        frequency: {}
+    }
 
-  return stats
+    // Compute the frequency of each token
+    for (let token of tokens) {
+        if (stats.frequency[token]) {
+            stats.frequency[token]++
+        } else {
+            stats.frequency[token] = 1
+        }
+    }
+
+    // Sort the frequency object by frequency in descending order
+    stats.frequency = Object.fromEntries(
+        Object.entries(stats.frequency).sort((a, b) => b[1] - a[1])
+    )
+
+    return stats
 }
 
 
@@ -247,16 +265,16 @@ function tokenStats(input) {
  * @return {number}
  */
 function countTokens(text) {
-  let count = 0
-  const matches = Array.from(text.matchAll(pat)).map(x => x[0])
-  for (let token of matches) {
-    token = encodeStr(token).map(x => {
-      return byte_encoder[x]
-    }).join('')
+    let count = 0
+    const matches = Array.from(text.matchAll(pat)).map(x => x[0])
+    for (let token of matches) {
+        token = encodeStr(token).map(x => {
+            return byte_encoder[x]
+        }).join('')
 
-    count += bpe(token).split(' ').length
-  }
-  return count
+        count += bpe(token).split(' ').length
+    }
+    return count
 }
 
 /**
@@ -266,18 +284,18 @@ function countTokens(text) {
  * @return {string} text - The decoded text string.
  */
 function decode(tokens) {
-  if(!tokens) {
-    console.warn("No tokens to decode, returning empty string")
-    return "";
-  }
-  let text = tokens.map(x => decoder[x]).join('')
-  text = decodeStr(text.split('').map(x => byte_decoder[x]))
-  return text
+    if (!tokens) {
+        console.warn("No tokens to decode, returning empty string")
+        return "";
+    }
+    let text = tokens.map(x => decoder[x]).join('')
+    text = decodeStr(text.split('').map(x => byte_decoder[x]))
+    return text
 }
 
 module.exports = {
-  encode,
-  decode,
-  countTokens,
-  tokenStats
+    encode,
+    decode,
+    countTokens,
+    tokenStats
 };

@@ -53,12 +53,10 @@ BPE. The returned object includes the following properties:
 
 Compatibility
 
-This library is compatible with both Node.js and browser environments, and has been converted to ECMAScript 6 syntax for
-use in the browser. A compiled version for both environments is included in the package.
+This library is compatible with both Node.js and browser environments, we have used webpack to build /dist/bundle.js 1.5 MB including the data. A compiled version for both environments is included in the package.
 Credits
 
-This library was created as a fork of the original GPT-3-Encoder library by latitudegames, with additional features and
-updates contributed by hugbubby.
+This library was created as a fork of the original GPT-3-Encoder library by latitudegames.
 
 ## Example
 
@@ -108,6 +106,21 @@ npm publish --access public
 
 
 ```
+Performance 
+Built bpe_ranks  in  100 ms
+
+// using js loading (probably before cache)
+Loaded encoder  in  121 ms
+Loaded bpe_ranks  in  91 ms
+
+// using fs loading
+Loaded encoder  in  32 ms
+Loaded bpe_ranks  in  44 ms
+
+//back to js loading
+Loaded encoder  in  35 ms
+Loaded bpe_ranks  in  40 ms
+
 
 ## todo
 
