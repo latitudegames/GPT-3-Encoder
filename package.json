@@ -1,6 +1,6 @@
 {
-  "name": "@syonfox/gpt-3-encoder",
-  "version": "1.4.0rc3",
+  "name": "gpt-3-encoder",
+  "version": "1.2.0-rc0",
   "description": "Javascript BPE Encoder Decoder for GPT-2 / GPT-3. The \"gpt-3-encoder\" module provides functions for encoding and decoding text using the Byte Pair Encoding (BPE) algorithm. It can be used to process text data for input into machine learning models, or to convert tokenized text back into human-readable format. It also includes functions for counting tokens in a given text and generating statistics about the tokens in a string or array.",
   "main": "index.js",
   "types": "./index.d.ts",
@@ -28,14 +28,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/syonfox/GPT-3-Encoder.git"
+    "url": "git+https://github.com/latitudegames/GPT-3-Encoder.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/syonfox/GPT-3-Encoder/issues"
+    "url": "https://github.com/latitudegames/GPT-3-Encoder/issues"
   },
-  "homepage": "https://github.com/syonfox/GPT-3-Encoder#readme",
+  "homepage": "https://github.com/latitudegames/GPT-3-Encoder#readme",
   "devDependencies": {
     "browserify": "^17.0.0",
     "jest": "^26.4.2",

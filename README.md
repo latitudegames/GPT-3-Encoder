@@ -11,31 +11,31 @@ documentation.
 To install with npm:
 
 ```
-npm install @syonfox/gpt-3-encoder
+npm install gpt-3-encoder
 ```
 
 ## Usage
 
-<a href="https://www.npmjs.com/package/@syonfox/gpt-3-encoder">
-  <img src="https://img.shields.io/npm/v/@syonfox/gpt-3-encoder.svg" alt="npm version">
+<a href="https://www.npmjs.com/package/gpt-3-encoder">
+  <img src="https://img.shields.io/npm/v/gpt-3-encoder.svg" alt="npm version">
 </a>
 
 
 
-[![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://syonfox.github.io/GPT-3-Encoder/)
+[![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://latitudegames.github.io/GPT-3-Encoder/)
 
-Also check out the browser demo [browser demo](https://syonfox.github.io/GPT-3-Encoder/browser.html)
+Also check out the browser demo [browser demo](https://latitudegames.github.io/GPT-3-Encoder/browser.html)
 
-[![GitHub last commit](https://img.shields.io/github/last-commit/syonfox/GPT-3-Encoder)](https://github.com/syonfox/GPT-3-Encoder/commits)
-[![example workflow](https://github.com/syonfox/GPT-3-Encoder/actions/workflows/node.js.yml/badge.svg)](https://github.com/syonfox/GPT-3-Encoder/actions)
-[![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/syonfox/GPT-3-Encoder/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/latitudegames/GPT-3-Encoder)](https://github.com/latitudegames/GPT-3-Encoder/commits)
+[![example workflow](https://github.com/latitudegames/GPT-3-Encoder/actions/workflows/node.js.yml/badge.svg)](https://github.com/latitudegames/GPT-3-Encoder/actions)
+[![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/latitudegames/GPT-3-Encoder/)
 
 Compatible with Node >= 12
 
 To use the library in your project, import it as follows:
 
 ```js
-const GPT3Encoder = require('@syonfox/gpt-3-encoder');
+const GPT3Encoder = require('gpt-3-encoder');
 ```
 
 ### Additional Features
@@ -97,7 +97,7 @@ I have added som other examples to the examples folder.
 Please take a look at package.json for how to do stuff
 
 ```sh
-git clone https://github.com/syonfox/GPT-3-Encoder.git
+git clone https://github.com/latitudegames/GPT-3-Encoder.git
 
 cd GPT-3-Encoder
 
@@ -120,7 +120,9 @@ npm publish --access public # dev publish to npm
 
 
 ```
+
 Performance 
+
 Built bpe_ranks  in  100 ms
 
 // using js loading (probably before cache)
