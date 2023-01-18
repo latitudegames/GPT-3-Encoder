@@ -98,7 +98,6 @@ Object.keys(byte_encoder).map(x => {
     byte_decoder[byte_encoder[x]] = x
 })
 
-
 const cache = new Map;
 
 /**
@@ -122,6 +121,7 @@ function bpe(token) {
     if (cache.has(token)) {
         return cache.get(token)
     }
+
 
     let word = token.split('')
 
@@ -256,6 +256,9 @@ function tokenStats(input) {
         }
     }
 
+
+    word = word.join(' ')
+    cache.set(token, word)
 
     // Sort the frequency object by frequency in descending order
     stats.frequency = Object.fromEntries(

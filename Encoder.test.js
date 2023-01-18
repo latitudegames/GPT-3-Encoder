@@ -128,3 +128,11 @@ test('test " issue #9', () => {
     expect(e).toEqual([447, 250, 42910, 14509, 257, 3850, 447, 251])
     expect(decode(e)).toEqual(str)
 })
+
+
+test('properties of Object',()=>{
+	const str = "toString constructor hasOwnProperty valueOf";
+
+	expect(encode(str)).toEqual([1462, 10100, 23772, 468, 23858, 21746, 1988, 5189]);
+	expect(decode(encode(str))).toEqual(str);
+})
