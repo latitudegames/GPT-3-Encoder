@@ -1,6 +1,7 @@
 // This file includes code which was modified from https://github.com/openai/gpt-2
 const fs = require('fs')
 const path = require('path');
+const util = require('util');
 
 const encoder = JSON.parse(fs.readFileSync(path.join(__dirname, './encoder.json')));
 const bpe_file = fs.readFileSync(path.join(__dirname, './vocab.bpe'), 'utf-8');
@@ -18,12 +19,12 @@ const chr = x => {
   return String.fromCharCode(x)
 }
 
-const textEncoder = new TextEncoder("utf-8")
+const textEncoder = new util.TextEncoder("utf-8")
 const encodeStr = str => {
   return Array.from(textEncoder.encode(str)).map(x => x.toString())
 }
 
-const textDecoder = new TextDecoder("utf-8")
+const textDecoder = new util.TextDecoder("utf-8")
 const decodeStr = arr => {
   return textDecoder.decode(new Uint8Array(arr));
 }
