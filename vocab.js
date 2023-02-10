@@ -1,4 +1,4 @@
-#version: 0.2
+module.exports = `#version: 0.2
 Ġ t
 Ġ a
 h e
@@ -4343,7 +4343,7 @@ ack s
 ad y
 d o
 ĠG ood
-Ġ `
+Ġ \`
 Ġw ish
 Ġreve aled
 Âł Âł
@@ -7302,7 +7302,7 @@ J ohn
 S m
 ĠF und
 Ġconst antly
-Ġ` `
+Ġ\` \`
 Ġgener ated
 ĠA ction
 ĠP sych
@@ -11335,7 +11335,7 @@ P ut
 Ġbrief ly
 ri ve
 Ġstim ul
-Ġ`` (
+Ġ\`\` (
 Ġ __
 Ġch ip
 Ġha z
@@ -15249,7 +15249,7 @@ ab a
 le tt
 Ġfol k
 Ġch ase
-` `
+\` \`
 ĠBr us
 Ġte ens
 c ue
@@ -32896,7 +32896,7 @@ ath s
 n atal
 =" "
 fl ags
-`` ``
+\`\` \`\`
 Ġs ul
 K h
 Ġpot assium
@@ -44389,7 +44389,7 @@ ub en
 ĠT ight
 ind al
 ic as
-` .
+\` .
 C AST
 '' ;
 ĠF et
@@ -47414,7 +47414,7 @@ CD C
 Ġsal ads
 F le
 Ġindustrial ized
-` ,
+\` ,
 ĠO WN
 Ġbec k
 ĠPart icularly
@@ -49999,3 +49999,4 @@ om inated
 ĠColl ider
 Ġinform ants
 Ġg azed
+`;
