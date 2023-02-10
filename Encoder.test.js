@@ -1,4 +1,4 @@
-const {encode, decode} = require('./Encoder.js');
+const {countTokens, encode, decode} = require('./Encoder.js');
 
 test('empty string', () => {
   const str = "";
@@ -42,3 +42,8 @@ test('properties of Object',()=>{
 	expect(encode(str)).toEqual([1462, 10100, 23772, 468, 23858, 21746, 1988, 5189]);
 	expect(decode(encode(str))).toEqual(str);
 })
+
+test('token count of string', () => {
+  const str = 'This string should have 7 tokens.';
+  expect(countTokens(str)).toEqual(7);
+});

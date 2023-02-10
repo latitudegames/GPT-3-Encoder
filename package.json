@@ -7,7 +7,7 @@
   "files": [
     "Encoder.js",
     "encoder.json",
-    "vocab.bpe",
+    "vocab.js",
     "index.d.ts"
   ],
   "scripts": {
