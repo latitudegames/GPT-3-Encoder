@@ -22,13 +22,13 @@ npm install gpt-3-encoder
 
 
 
-[![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://latitudegames.github.io/GPT-3-Encoder/)
+[![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://syonfox.github.io/GPT-3-Encoder/)
 
 Also check out the browser demo [browser demo](https://latitudegames.github.io/GPT-3-Encoder/browser.html)
 
-[![GitHub last commit](https://img.shields.io/github/last-commit/latitudegames/GPT-3-Encoder)](https://github.com/latitudegames/GPT-3-Encoder/commits)
-[![example workflow](https://github.com/latitudegames/GPT-3-Encoder/actions/workflows/node.js.yml/badge.svg)](https://github.com/latitudegames/GPT-3-Encoder/actions)
-[![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/latitudegames/GPT-3-Encoder/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/syonfox/GPT-3-Encoder)](https://github.com/syonfox/GPT-3-Encoder/commits)
+[![example workflow](https://github.com/syonfox/GPT-3-Encoder/actions/workflows/node.js.yml/badge.svg)](https://github.com/syonfox/GPT-3-Encoder/actions)
+[![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/syonfox/GPT-3-Encoder/)
 
 Compatible with Node >= 12
 
@@ -49,7 +49,7 @@ This function returns the number of tokens in the provided text, after encoding 
 This function returns an object containing statistics about the tokens in the provided text, after encoding it using
 BPE. The returned object includes the following properties:
 
-- `total`: the total number of tokens in the text.
+- `count`: the total number of tokens in the text.
 - `unique`: the number of unique tokens in the text.
 - `frequencies`: an object containing the frequency of each token in the text.
 - `postions`: an object mapping tokens to positions in the encoded string
@@ -97,7 +97,7 @@ I have added som other examples to the examples folder.
 Please take a look at package.json for how to do stuff
 
 ```sh
-git clone https://github.com/latitudegames/GPT-3-Encoder.git
+git clone https://github.com/syonfox/GPT-3-Encoder.git
 
 cd GPT-3-Encoder
 

@@ -1,17 +1,21 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.gpt3encoder = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 (function (Buffer){(function (){
+
+
+const encoder = require("./encoder");
+
 // This file includes code which was modified from https://github.com/openai/gpt-2
+const bpe_ranks = require("./bpe_ranks");
+
+//The old version used to include this but i prebuild it into a js file to be loaded by browserify
+//todo delete old comments when not needed
 // const fs = require('fs')
 // const path = require('path');
 // const json-loder
 // const loader = require("json-loader");
 
 // const encoder = loader('./encoder.json');
-
 // const encoder = JSON.parse(fs.readFileSync(path.join(__dirname, './encoder.json')));
-const encoder = require("./encoder");
-
-const bpe_ranks = require("./bpe_ranks");
 // const bpe_file = fs.readFileSync(path.join(__dirname, './vocab.bpe'), 'utf-8');
 
 const range = (x, y) => {
@@ -69,7 +73,7 @@ function get_pairs(word) {
 }
 
 const pat = /'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu
-// The regular expression patis used to split a string into an array of tokens.
+// The regular expression pat is used to split a string into an array of tokens.
 //
 // The regular expression consists of several parts:
 //     's|'t|'re|'ve|'m|'ll|'d: These are all short forms of common English words (e.g. "is", "not", "have"). The | symbol means "or", so this part of the expression matches any of these short forms.
@@ -100,7 +104,6 @@ Object.keys(byte_encoder).map(x => {
     byte_decoder[byte_encoder[x]] = x
 })
 
-
 const cache = new Map;
 
 /**
@@ -124,6 +127,7 @@ function bpe(token) {
     if (cache.has(token)) {
         return cache.get(token)
     }
+
 
     let word = token.split('')
 
@@ -258,6 +262,10 @@ function tokenStats(input) {
         }
     }
 
+
+    // let word = word.join(' ')
+    // cache.set(token, word)
+    //todo count words and determin some string stats as well
 
     // Sort the frequency object by frequency in descending order
     stats.frequency = Object.fromEntries(
