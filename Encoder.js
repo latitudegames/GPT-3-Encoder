@@ -261,8 +261,9 @@ function tokenStats(input) {
     }
 
 
-    word = word.join(' ')
-    cache.set(token, word)
+    // let word = word.join(' ')
+    // cache.set(token, word)
+    //todo count words and determin some string stats as well
 
     // Sort the frequency object by frequency in descending order
     stats.frequency = Object.fromEntries(
