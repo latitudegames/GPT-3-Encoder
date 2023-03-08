@@ -20,6 +20,8 @@
   "scripts": {
     "docs": "jsdoc Encoder.js -r README.md -d docs && cp browser.* docs",
     "build_bpe_ranks": "node build_bpe_ranks.js",
+    "build_encoder": "node build_encoder.js",
+
     "build": "browserify index.js -s gpt3encoder -o browser.js",
     "test": "jest",
     "browser": "firefox example/browser.html",

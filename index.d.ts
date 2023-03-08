@@ -5,6 +5,14 @@ declare module "gpt-3-encoder" {
 
     export function countTokens(text: string): number;
 
-    export function tokenStats(input: string | number[]): any;
+    export function tokenStats(input: string | number[]): TokenStats;
+
+    export interface TokenStats {
+        count: number;
+        unique: number;
+        frequency: Record<string, number>;
+        positions: Record<string, number[]>;
+        tokens: string[];
+    }
 
 }

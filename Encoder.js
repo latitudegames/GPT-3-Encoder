@@ -1,15 +1,19 @@
+
+
+const encoder = require("./encoder");
+
 // This file includes code which was modified from https://github.com/openai/gpt-2
+const bpe_ranks = require("./bpe_ranks");
+
+//The old version used to include this but i prebuild it into a js file to be loaded by browserify
+//todo delete old comments when not needed
 // const fs = require('fs')
 // const path = require('path');
 // const json-loder
 // const loader = require("json-loader");
 
 // const encoder = loader('./encoder.json');
-
 // const encoder = JSON.parse(fs.readFileSync(path.join(__dirname, './encoder.json')));
-const encoder = require("./encoder");
-
-const bpe_ranks = require("./bpe_ranks");
 // const bpe_file = fs.readFileSync(path.join(__dirname, './vocab.bpe'), 'utf-8');
 
 const range = (x, y) => {
@@ -67,7 +71,7 @@ function get_pairs(word) {
 }
 
 const pat = /'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu
-// The regular expression patis used to split a string into an array of tokens.
+// The regular expression pat is used to split a string into an array of tokens.
 //
 // The regular expression consists of several parts:
 //     's|'t|'re|'ve|'m|'ll|'d: These are all short forms of common English words (e.g. "is", "not", "have"). The | symbol means "or", so this part of the expression matches any of these short forms.
@@ -262,7 +266,8 @@ function tokenStats(input) {
 
     // Sort the frequency object by frequency in descending order
     stats.frequency = Object.fromEntries(
-        Object.entries(stats.frequency).sort((a, b) => b[1] - a[1])
+        Object.entries(stats.frequency)
+            .sort((a, b) => b[1] - a[1])
     )
 
     return stats
