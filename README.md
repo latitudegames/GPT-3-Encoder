@@ -69,7 +69,7 @@ Note you may need to include it from the appropriate place in node modules / npm
 ```js
 
 import {encode, decode, countTokens, tokenStats} from "gpt-3-encoder"
-//or
+//or note you might need @syonfox/gpt-3-encoder if thats what you npm install
 const {encode, decode, countTokens, tokenStats} = require('gpt-3-encoder')
 
 const str = 'This is an example sentence to try encoding out on!'
