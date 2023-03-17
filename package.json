@@ -1,29 +1,57 @@
 {
-  "name": "gpt-3-encoder",
-  "version": "1.1.4",
-  "description": "Javascript BPE Encoder Decoder for GPT-2 / GPT-3",
+  "name": "@syonfox/gpt-3-encoder",
+  "version": "1.4.0-rc5",
+  "description": "Javascript BPE Encoder Decoder for GPT-2 / GPT-3. The \"gpt-3-encoder\" module provides functions for encoding and decoding text using the Byte Pair Encoding (BPE) algorithm. It can be used to process text data for input into machine learning models, or to convert tokenized text back into human-readable format. It also includes functions for counting tokens in a given text and generating statistics about the tokens in a string or array.",
   "main": "index.js",
   "types": "./index.d.ts",
   "files": [
+    "browser.js",
     "Encoder.js",
     "encoder.json",
-    "vocab.bpe",
-    "index.d.ts"
+    "encoder.js",
+    "bpe_ranks.js",
+    "index.js",
+    "index.d.ts",
+    "browser.html",
+    "encoder.json",
+    "encoder.py",
+    "vocab.bpe"
   ],
   "scripts": {
-    "test": "jest"
+    "docs": "jsdoc Encoder.js -r README.md -d docs && cp browser.* docs",
+    "build_bpe_ranks": "node build_bpe_ranks.js",
+    "build_encoder": "node build_encoder.js",
+
+    "build": "browserify index.js -s gpt3encoder -o browser.js",
+    "test": "jest",
+    "browser": "firefox example/browser.html",
+    "demo": "node example/demo.js"
+
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AIDungeon/GPT-3-Encoder.git"
+    "url": "git+https://github.com/latitudegames/GPT-3-Encoder.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/AIDungeon/GPT-3-Encoder/issues"
+    "url": "https://github.com/latitudegames/GPT-3-Encoder/issues"
   },
-  "homepage": "https://github.com/AIDungeon/GPT-3-Encoder#readme",
+  "homepage": "https://github.com/latitudegames/GPT-3-Encoder#readme",
   "devDependencies": {
-    "jest": "^26.4.2"
-  }
+    "browserify": "^17.0.0",
+    "jest": "^26.4.2",
+    "jsdoc": "^4.0.0"
+  },
+  "keywords": [
+    "JavaScript",
+    "BPE",
+    "Encoder",
+    "Decoder",
+    "GPT-2",
+    "GPT-3",
+    "Natural Language Processing (NLP)",
+    "Text Generation",
+    "Machine Learning"
+  ]
 }
