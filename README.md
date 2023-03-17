@@ -1,5 +1,8 @@
 # GPT-3-Encoder
 
+check out the https://github.com/syonfox/GPT-3-Encoder/tree/GPToken branch 
+
+
 Javascript library for encoding and decoding text using Byte Pair Encoding (BPE), as used in GPT-2 and GPT-3 models by
 OpenAI. This is a fork of the original python implementation by OpenAI, which can be found here.
 
